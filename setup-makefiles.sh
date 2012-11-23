@@ -160,9 +160,9 @@ PRODUCT_COPY_FILES += \\
 PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/rmt_storage:system/bin/rmt_storage
 
-## wipeirface
+## wiperiface
 PRODUCT_COPY_FILES += \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/wipeirface:system/bin/wipeirface
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/wiperiface:system/bin/wiperiface
 
 ## Keycharacter Map
 PRODUCT_COPY_FILES += \\
