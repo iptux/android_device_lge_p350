@@ -458,7 +458,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
     uint16_t denominator[4];
     uint16_t shift[2];
 
-    if ((buf[0] == 'A') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3'))) {
+    if ((buf[0] == 'A') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3') || (buf[1] == '4'))) {
         /* IIR filter */
         if(buf[1] == '1') device_id=0;
         if(buf[1] == '2') device_id=1;
@@ -485,7 +485,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
             goto token_err;
         iir_cfg[device_id].num_bands = (uint16_t)strtol(p, &ps, 16);
 
-    } else if ((buf[0] == 'B') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3'))) {
+    } else if ((buf[0] == 'B') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3') || (buf[1] == '4'))) {
         /* This is the ADRC record we are looking for.  Tokenize it */
         if(buf[1] == '1') device_id=0;
         if(buf[1] == '2') device_id=1;
@@ -540,7 +540,7 @@ int check_and_set_audpp_parameters(char *buf, int size)
         if (!(p = strtok(NULL, seps)))
             goto token_err;
 
-    } else if (buf[0] == 'C' && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3'))) {
+    } else if (buf[0] == 'C' && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3') || (buf[1] == '4'))) {
         /* This is the EQ record we are looking for.  Tokenize it */
         if(buf[1] == '1') device_id=0;
         if(buf[1] == '2') device_id=1;
@@ -601,11 +601,12 @@ int check_and_set_audpp_parameters(char *buf, int size)
         }
         ::dlclose(audioeq);
 
-    } else if ((buf[0] == 'D') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3'))) {
+    } else if ((buf[0] == 'D') && ((buf[1] == '1') || (buf[1] == '2') || (buf[1] == '3') || (buf[1] == '4'))) {
      /* This is the MB_ADRC record we are looking for.  Tokenize it */
         if(buf[1] == '1') device_id=0;
         if(buf[1] == '2') device_id=1;
         if(buf[1] == '3') device_id=2;
+        if(buf[1] == '4') device_id=3;
         mbadrc_filter_exists[device_id] = true;
         if (!(p = strtok(buf, ",")))
             goto token_err;
