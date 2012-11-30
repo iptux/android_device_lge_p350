@@ -465,6 +465,35 @@ String8 AudioHardware::getParameters(const String8& keys)
     return param.toString();
 }
 
+/*
+ * by default, strtok() will find the first non-delimeter char and return
+ * but that is not the case in parsing AudioFilter.csv
+ * as there're plenty of series ","(delimeter char for .csv file)
+ * strtok() will skip them and reach the end of string and return NULL
+ * then parsing fail and audio post processing filter init failed
+ * and the most unfortunate part, audio post processing will never occur
+ *
+ * so we need a custom version of strtok() parsing .csv that handle
+ * series delimeter char correctly
+ */
+#undef strtok
+static char *strtok(char *s, const char *delim)
+{
+    static char *next = NULL;
+
+    if (s == NULL && (s = next) == NULL)
+        return (NULL);
+
+    /*
+     * NOTE: there will be only one delimeter char
+     */
+    next = strchr(s, *delim);
+    if (next != NULL)
+        *next++ = 0;
+
+    return s;
+}
+
 int check_and_set_audpp_parameters(char *buf, int size)
 {
     char *p, *ps;
